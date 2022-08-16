@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
+/*using DG.Tweening;*/
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -79,7 +79,7 @@ public class EventManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _indecator.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-501f, 70f), 1f);
+        //_indecator.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-501f, 70f), 1f);
         _Player = GameObject.FindGameObjectWithTag("Player");
 
 
@@ -98,13 +98,13 @@ public class EventManager : MonoBehaviour
         if (getChest() != null && !getChest().GetComponent<ChestDetails>().getStatus())
         {
             //getChest().transform.Find("SM_Prop_Chest_Lid_01").transform.localRotation = Quaternion.Euler(-157.33f, 0, 0);
-            _indecator.GetComponent<RectTransform>().DOAnchorPos(new Vector2(25f, 70f), 1f);
+            //_indecator.GetComponent<RectTransform>().DOAnchorPos(new Vector2(25f, 70f), 1f);
             infoIndecator.SetActive(false);
             _clicked = true;
         }
         else
         {
-            _indecator.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-501f, 70f), .3f);
+           // _indecator.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-501f, 70f), .3f);
             infoIndecator.SetActive(true);
             _clicked = false;
         }

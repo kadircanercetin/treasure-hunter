@@ -8,12 +8,12 @@ public class SharkManager : MonoBehaviour
     [SerializeField] private float _speed, damping;
     [SerializeField] private GameObject[] _wayPoints;
     [SerializeField] private int _target;
-   
+
     private Transform target;
     void Awake()
     {
         _wayPoints = GameObject.FindGameObjectsWithTag("Point");
-         _speed = 0.004f;
+        _speed = 0.004f;
         _target = 1;
         target = _wayPoints[1].transform;
     }
@@ -27,7 +27,7 @@ public class SharkManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        this.gameObject.transform.position = Vector3.Lerp(transform.position,target.position,_speed);
+        this.gameObject.transform.position = Vector3.Lerp(transform.position, target.position, _speed);
 
 
         var rotation = Quaternion.LookRotation(target.position - transform.position);
@@ -38,7 +38,7 @@ public class SharkManager : MonoBehaviour
 
 
 
-     void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
 
         print("OK");
@@ -65,16 +65,16 @@ public class SharkManager : MonoBehaviour
         {
             target = other.transform;
 
-  
+
             _speed = 0.01f;
             other.GetComponent<Invector.vCharacterController.vThirdPersonController>().TakeDamage(new Invector.vDamage(20));
             StopCoroutine(chase());
             StartCoroutine(chase());
         }
-       
+
     }
 
-  
+
     IEnumerator chase()
     {
         yield return new WaitForSeconds(5f);

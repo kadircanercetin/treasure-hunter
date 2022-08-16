@@ -17,7 +17,16 @@ namespace Invector
         public bool isImmortal = false;
         [vHelpBox("If you want to start with different value, uncheck this and make sure that the current health has a value greater zero")]
         public bool fillHealthOnStart = true;
+        public float decreaseHealthSpeed = 1f;
+        public bool decreaseHealthOverTime = false;
         public int maxHealth = 100;
+        private void Update()
+        {
+            if (decreaseHealthOverTime)
+            {
+                currentHealth = currentHealth - decreaseHealthSpeed * Time.deltaTime;
+            }
+        }
         public int MaxHealth
         {
             get
@@ -117,7 +126,7 @@ namespace Invector
 
         protected virtual void HealthRecovery()
         {
-            if (!canRecoverHealth||isDead) return;
+            if (!canRecoverHealth || isDead) return;
             if (currentHealthRecoveryDelay > 0)
                 currentHealthRecoveryDelay -= Time.deltaTime;
             else
@@ -191,7 +200,7 @@ namespace Invector
             if (maxHealth < 0)
                 maxHealth = 0;
         }
-   
+
         /// <summary>
         /// Apply Damage to Current Health
         /// </summary>
@@ -199,12 +208,12 @@ namespace Invector
         public virtual void TakeDamage(vDamage damage)
         {
             if (damage != null)
-            {             
+            {
                 onStartReceiveDamage.Invoke(damage);
                 currentHealthRecoveryDelay = currentHealth <= 0 ? 0 : healthRecoveryDelay;
 
                 if (currentHealth > 0 && !isImmortal)
-                {                   
+                {
                     currentHealth -= damage.damageValue;
                 }
 
