@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
+//using DG.Tweening;
 public class UIManager : MonoBehaviour
 {
 
@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
         _settingMenu = GameObject.FindGameObjectWithTag("Setting");
         background.SetActive(false);
         print("Position  "+_settingMenu.GetComponent<RectTransform>().position);
-        _settingMenu.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 1112f), 1.5f);
+        //_settingMenu.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 1112f), 1.5f);
     }
     #endregion Initialize
 
@@ -35,14 +35,14 @@ public class UIManager : MonoBehaviour
        
         background.SetActive(true);
         background.GetComponent<Animator>().SetBool("Active", true);
-        _settingMenu.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 28f), 1.5f);
+        //_settingMenu.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 28f), 1.5f);
     }
     public void Close()
     {
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        _settingMenu.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0f, 1112f), 1.5f);
+        //_settingMenu.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0f, 1112f), 1.5f);
         background.GetComponent<Animator>().SetBool("Active", false);
 
 

@@ -9,7 +9,7 @@ namespace WayPoints
     {
         // Start is called before the first frame update
 
-        [SerializeField] private Transform[] Points;
+        public Transform[] Points;
 
         void Start()
         {
