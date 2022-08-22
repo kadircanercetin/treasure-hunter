@@ -62,7 +62,7 @@ namespace Invector.vCharacterController
 
         private void Awake()
         {
-            healthSlider = GameObject.FindGameObjectWithTag("healthSlider").GetComponent<Slider>();
+            //healthSlider = GameObject.FindGameObjectWithTag("healthSlider").GetComponent<Slider>();
         }
 
 
