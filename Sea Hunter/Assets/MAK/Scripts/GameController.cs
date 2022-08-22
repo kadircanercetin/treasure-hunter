@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 namespace Invector
 {
+    using Invector.vCamera;
     using UnityEngine.Events;
     using vCharacterController;
     [vClassHeader("Simple GameController Example", openClose = false)]
@@ -27,6 +29,7 @@ namespace Invector
         [HideInInspector]
         public GameObject currentPlayer;
         private vThirdPersonController currentController;
+        public vThirdPersonCamera currentCameraState;
         public static GameController instance;
         private GameObject oldPlayer;
         public vThirdPersonController newPlayer;
@@ -35,14 +38,12 @@ namespace Invector
         public Animator animator1;
         public string OpeningAnimationName;
         public int treasureCount = 0;
-        public GameObject levelCleared;
-        public GameObject missionText;
+
         protected virtual void Start()
         {
             if (instance == null)
             {
                 instance = this;
-                //DontDestroyOnLoad(this.gameObject);
                 this.gameObject.name = gameObject.name + " Instance";
             }
             else
@@ -56,7 +57,7 @@ namespace Invector
 
         IEnumerator Cinematic()
         {
-            missionText.SetActive(true);
+            GetComponent<UIManager>().missionText.SetActive(true);
             while (animator1.GetCurrentAnimatorStateInfo(0).IsName(OpeningAnimationName))
             {
                 yield return null;
@@ -64,7 +65,9 @@ namespace Invector
             yield return new WaitForSeconds(1f);
             animator1.gameObject.SetActive(false);
             animator1.gameObject.SetActive(false);
-            missionText.SetActive(false);
+            GetComponent<UIManager>().missionText.SetActive(false);
+            GetComponent<UIManager>().playerUI.SetActive(true);
+            GetComponent<UIManager>().TurnOffHints();
             SceneManager.sceneLoaded += OnLevelFinishedLoading;
             if (displayInfoInFadeText && vHUDController.instance)
             {
@@ -157,7 +160,7 @@ namespace Invector
 
         protected virtual void FindPlayer()
         {
-            //; var player = GameObject.FindObjectOfType<vThirdPersonController>();
+            //var player = GameObject.FindObjectOfType<vThirdPersonController>();
             var player = newPlayer;
             player.gameObject.SetActive(true);
             if (player)
@@ -300,8 +303,10 @@ namespace Invector
                 StopAllCoroutines();
                 animator1.gameObject.SetActive(false);
                 animator1.gameObject.SetActive(false);
-                missionText.SetActive(false);
+                GetComponent<UIManager>().missionText.SetActive(false);
                 SceneManager.sceneLoaded += OnLevelFinishedLoading;
+                GetComponent<UIManager>().playerUI.SetActive(true);
+                GetComponent<UIManager>().TurnOffHints();
                 if (displayInfoInFadeText && vHUDController.instance)
                 {
                     vHUDController.instance.ShowText("Init Scene");
@@ -310,13 +315,16 @@ namespace Invector
                 FindPlayer();
             }
         }
-  
+
         public void CollectTreasure()
         {
             treasureCount++;
+            GetComponent<UIManager>().treasureSlider.value++;
+            GetComponent<UIManager>().UpdateMileStone();
+            GetComponent<UIManager>().treasureSlider.GetComponentInChildren<TextMeshProUGUI>().text = $"{treasureCount}/4";
             if (treasureCount > 3)
             {
-                levelCleared.SetActive(true);
+                GetComponent<UIManager>().levelCleared.SetActive(true);
                 LevelClear();
             }
         }
@@ -332,14 +340,32 @@ namespace Invector
             var scene = SceneManager.GetActiveScene();
             if (count > scene.buildIndex)
             {
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene(2);
             }
             else
             {
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(1);
             }
 
         }
 
+
+        #region PlayerProperties
+        public void JumpHeightSlider(float value)
+        {
+            currentController.jumpHeight = value;
+        }
+
+        public void MoveSpeed(float value)
+        {
+            currentController.speedMultiplier = value;
+        }
+
+        public void CameraSensitivity(float value)
+        {
+            currentCameraState.currentState.xMouseSensitivity = value;
+            currentCameraState.currentState.yMouseSensitivity = value;
+        }
+        #endregion
     }
 }
