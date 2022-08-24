@@ -1,7 +1,11 @@
 # Underwater Treasure Hunter
 
 ## How To Play
-The player has basic 3D movement available under water (move, jump, swim). You should avoid shark and crabs attaks and collect glowing chests to be able to complete the level 1. 
+
+- The player has basic 3D movement available under water (move, jump, swim). 
+- You should avoid shark and crab attaks and collect glowing chests to be able to complete the level 1 and level 2
+- It is not possible to complete level 2 without using the platforms in different kinds.
+ 
 
 ## Technical Requirements
 - Unity version: 2021.1.27f1
